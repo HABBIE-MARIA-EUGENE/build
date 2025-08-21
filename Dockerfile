@@ -1,6 +1,17 @@
 # Start from official PHP + Apache image
 FROM php:8.2-apache
-
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    && docker-php-ext-install pdo_mysql mysqli
 # Install system dependencies needed for MongoDB extension
 RUN apt-get update && apt-get install -y \
     libssl-dev \
