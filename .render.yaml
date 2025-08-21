@@ -3,6 +3,6 @@ services:
     name: php-app
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./build/Dockerfile
     branch: main
     autoDeploy: true
