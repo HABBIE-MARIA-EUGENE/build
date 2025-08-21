@@ -13,15 +13,21 @@ RUN apt-get update && apt-get install -y \
 
 # Enable Apache rewrite module (if you need it for routing)
 RUN a2enmod rewrite
-
-# Copy composer from official composer image
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
 # Set working directory inside container
 WORKDIR /var/www/html/
 
 # Copy project files into container
 COPY . /var/www/html/
+
+# Copy composer from official composer image
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Copy project files (use public as DocumentRoot)
+COPY public/ /var/www/html/
+
+
+
+# Set Apache ServerName to avoid warnings
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Install PHP dependencies (now ext-mongodb is available)
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
