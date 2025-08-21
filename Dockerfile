@@ -1,6 +1,13 @@
 # Base image with PHP and Apache
 FROM php:8.2-apache
 
+# Install system dependencies for MongoDB extension
+RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    pkg-config \
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
 # Install system dependencies for PHP extensions
 RUN apt-get update && apt-get install -y \
     libpng-dev \
