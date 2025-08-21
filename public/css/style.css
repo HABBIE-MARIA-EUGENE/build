@@ -1,0 +1,93 @@
+/* element selector */
+
+body{
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    line-height: 1.7;
+}
+
+/* class selector (.) and id selector (#) */
+.form-row {
+    margin-bottom: 10px;
+}
+#msg {
+    margin-top: 10px;
+}
+
+/* attribute selector */
+input[type="email"] {
+    border: 2px solid #5659ea;
+}
+input[type="password"] {
+    border: 1.5px solid #ed14e3f7;
+}
+
+/* pseudoclass selector */
+input:focus {
+    outline: 5px solid #00ff6e;
+}
+
+/* untility class for feed back */
+.text-success {
+    color:#198754;
+}
+
+.text-danger{
+    color: #dc3545;
+}
+
+/*visualize spacing quickly */
+ * {
+    box-sizing: border-box; /* recomm. default*/
+ }
+
+
+
+ label {
+    display: block;
+    margin-bottom: 4px;
+ }
+
+ input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+ }
+
+ button{
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 6px;
+    background: #0d6efd;
+    color: #fff;
+    cursor: pointer;
+ }
+
+ button:hover {
+    filter: brightness(1.25);
+    
+ }
+
+
+ /* layout: flex(quick intro)*/
+
+ header, footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    color: #555;
+ }
+
+ /*responsive units*/
+ /*
+ % = relative to parent size
+ rem = relative to root font size (will be good for consistent spacing)
+ vw/vh = viewport width/height
+ */
+
+
+
+ h1{
+    font-size: 2.5rem;
+ }
