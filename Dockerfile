@@ -1,39 +1,30 @@
-# Base image with PHP and Apache
+# Start from official PHP + Apache image
 FROM php:8.2-apache
 
-# Install system dependencies for MongoDB extension
+# Install system dependencies needed for MongoDB extension
 RUN apt-get update && apt-get install -y \
     libssl-dev \
     pkg-config \
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb
-
-# Install system dependencies for PHP extensions
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
     unzip \
     git \
-    curl \
-    && docker-php-ext-install pdo_mysql mysqli
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb \
+    && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite
+# Enable Apache rewrite module (if you need it for routing)
 RUN a2enmod rewrite
+
+# Copy composer from official composer image
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory inside container
+WORKDIR /var/www/html/
 
 # Copy project files into container
 COPY . /var/www/html/
 
-# Set working directory
-WORKDIR /var/www/html/
+# Install PHP dependencies (now ext-mongodb is available)
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Install composer (for vendor autoload)
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN composer install
-
-# Expose Apache port
+# Expose port 80
 EXPOSE 80
-
-# Start Apache
-CMD ["apache2-foreground"]
